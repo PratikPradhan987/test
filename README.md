@@ -9,6 +9,15 @@ Install with npm
   cd test
 ```
 
+![NextJS Installation](https://github.com/PratikPradhan987/test/blob/main/public/nextJS_setup.jpeg?raw=true)
+
+```bash
+  npm install prisma
+  npx prisma init
+```
+
+![MySql-DataBase](https://github.com/PratikPradhan987/test/blob/main/public/databaase_url.jpeg?raw=true)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
