@@ -1,8 +1,4 @@
-# NextJS 14 and prisma setup
-
-## Installation
-
-Install with npm
+#### Installation
 
 ```bash
   npx create-next-app@latest
@@ -17,6 +13,22 @@ Install with npm
 ```
 
 ![MySql-DataBase](https://github.com/PratikPradhan987/test/blob/main/public/databaase_url.jpeg?raw=true)
+
+```bash
+  DATABASE_URL="mysql://root:<password>@localhost:3306/test"
+```
+
+## Roadmap
+
+- prisma init
+
+```bash
+  npx prisma init
+```
+
+- create model in
+
+  `nexts-app->prisma->schema.prisma`
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
