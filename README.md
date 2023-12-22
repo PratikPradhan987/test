@@ -20,7 +20,7 @@
   DATABASE_URL="mysql://root:<password>@localhost:3306/test"
 ```
 
-## Roadmaps
+## Roadmap
 
 - prisma init
 
@@ -32,7 +32,7 @@
 
   `nexts-app->prisma->schema.prisma`
 
-![Prisma-model]()
+![Prisma-model](https://github.com/PratikPradhan987/test/blob/main/public/prisma-model.jpeg?raw=true)
 
 ```bash
 Npx prisma migrate dev –name create user
