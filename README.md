@@ -71,6 +71,76 @@ if (process.env.NODE_ENV === 'production') {
 export default prisma;
 ```
 
+#### nextsJS CRUD codes
+
+#### Create
+```javascript
+// saving data to database
+
+import prisma from '../../../lib/prisma'
+
+export default async function handle(req, res) {
+    const { title, content, published } = req.body;
+    const result = await prisma.post.create({
+        data: {
+            title: title,
+            content: content,
+            published: published
+        },
+    });
+    res.json(result);
+}
+```
+### Update
+```javascript
+// updating data of previous added data
+
+import prisma from '../../../lib/prisma'
+
+export default async function handle(req, res) {
+    const { published } = req.body;
+    const result = await prisma.post.update({
+        where: {
+            id: req.query.id,
+        },
+        data: {
+            published: published,
+        }
+    });
+    res.json(result);
+}
+```
+### Read
+```javascript
+// Reading data from database
+
+export const getStaticProps = async () => {
+  const feed = await prisma.post.findMany({
+    where: { published: true },
+  });
+  return {
+    props: { feed },
+    revalidate: 10,
+  };
+}
+```
+### Delete
+```javascript
+// delete data
+
+import prisma from '../../../lib/prisma'
+
+export default async function handle(req, res) {
+    const result = await prisma.post.delete({
+        where: {
+            id: req.query.id,
+        }
+    });
+    res.json(result);
+}
+```
+
+
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
