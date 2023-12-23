@@ -1,6 +1,8 @@
+
 # NextJS 14 and prisma setup
 
-#### Installation
+
+#### Setting up the application
 
 ```bash
   npx create-next-app@latest
@@ -9,21 +11,23 @@
 
 ![NextJS Installation](https://github.com/PratikPradhan987/test/blob/main/public/nextJS_setup.jpeg?raw=true)
 
+    
+
 ```bash
-  npm install prisma
+  npm install prisma --save-dev
   npx prisma init
 ```
+
+#### Connecting Prisma with your Database
 
 ![MySql-DataBase](https://github.com/PratikPradhan987/test/blob/main/public/databaase_url.jpeg?raw=true)
 
 ```bash
-  DATABASE_URL="mysql://root:<password>@localhost:3306/test"
+  DATABASE_URL="mysql://<username>:<password>@localhost:3306/<db-name>"
 ```
-
 ## Roadmap
 
 - prisma init
-
 ```bash
   npx prisma init
 ```
@@ -34,9 +38,40 @@
 
 ![Prisma-model](https://github.com/PratikPradhan987/test/blob/main/public/prisma-model.jpeg?raw=true)
 
+#### database sync with schema
+
 ```bash
-Npx prisma migrate dev –name create user
+Npx prisma migrate dev –name create-user
 ```
+
+### Connecting Prisma to Next.js
+
+```bash
+npm install @prisma/client
+npx prisma generate
+```
+
+
+#### create prisma.js/client.js in prisma directory. THe file will host the client connection
+
+```javascript
+import { PrismaClient } from '@prisma/client';
+
+let prisma;
+
+if (process.env.NODE_ENV === 'production') {
+    prisma = new PrismaClient();
+} else {
+    if (!global.prisma) {
+        global.prisma = new PrismaClient();
+    }
+    prisma = global.prisma;
+}
+
+export default prisma;
+```
+
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
