@@ -25,6 +25,16 @@
 ```bash
   DATABASE_URL="mysql://<username>:<password>@localhost:3306/<db-name>"
 ```
+## Using Mysql through Docker
+### Docker setup
+```bash
+docker pull mysql
+
+docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:latest
+
+docker exec -it mysql-db bash 
+```    
+
 ## Roadmap
 
 - prisma init
