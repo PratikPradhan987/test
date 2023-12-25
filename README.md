@@ -1,5 +1,10 @@
+
 # NextJS 14 and prisma setup
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 086755d9194a7d8e1a95aecf54be325c0d0242b6
 #### Setting up the application
 
 ```bash
@@ -8,6 +13,8 @@
 ```
 
 ![NextJS Installation](https://github.com/PratikPradhan987/test/blob/main/public/nextJS_setup.jpeg?raw=true)
+
+    
 
 ```bash
   npm install prisma --save-dev
@@ -20,6 +27,7 @@
 
 ```bash
   DATABASE_URL="mysql://<username>:<password>@localhost:3306/<db-name>"
+<<<<<<< HEAD
 ```
 
 ## Using Mysql through Docker
@@ -32,12 +40,22 @@ docker pull mysql
 docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:latest
 
 docker exec -it mysql-db bash
+=======
+>>>>>>> 086755d9194a7d8e1a95aecf54be325c0d0242b6
 ```
+## Using Mysql through Docker
+### Docker setup
+```bash
+docker pull mysql
+
+docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:latest
+
+docker exec -it mysql-db bash 
+```    
 
 ## Roadmap
 
 - prisma init
-
 ```bash
   npx prisma init
 ```
@@ -52,6 +70,7 @@ docker exec -it mysql-db bash
 
 ```bash
 Npx prisma migrate dev –name create-user
+<<<<<<< HEAD
 ```
 
 ### Connecting Prisma to Next.js
@@ -154,7 +173,108 @@ export default async function handle(req, res) {
   });
   res.json(result);
 }
+=======
+>>>>>>> 086755d9194a7d8e1a95aecf54be325c0d0242b6
 ```
+
+### Connecting Prisma to Next.js
+
+```bash
+npm install @prisma/client
+npx prisma generate
+```
+
+
+#### create prisma.js/client.js in prisma directory. THe file will host the client connection
+
+```javascript
+import { PrismaClient } from '@prisma/client';
+
+let prisma;
+
+if (process.env.NODE_ENV === 'production') {
+    prisma = new PrismaClient();
+} else {
+    if (!global.prisma) {
+        global.prisma = new PrismaClient();
+    }
+    prisma = global.prisma;
+}
+
+export default prisma;
+```
+
+#### nextsJS CRUD codes
+
+#### Create
+```javascript
+// saving data to database
+
+import prisma from '../../../lib/prisma'
+
+export default async function handle(req, res) {
+    const { title, content, published } = req.body;
+    const result = await prisma.post.create({
+        data: {
+            title: title,
+            content: content,
+            published: published
+        },
+    });
+    res.json(result);
+}
+```
+### Update
+```javascript
+// updating data of previous added data
+
+import prisma from '../../../lib/prisma'
+
+export default async function handle(req, res) {
+    const { published } = req.body;
+    const result = await prisma.post.update({
+        where: {
+            id: req.query.id,
+        },
+        data: {
+            published: published,
+        }
+    });
+    res.json(result);
+}
+```
+### Read
+```javascript
+// Reading data from database
+
+export const getStaticProps = async () => {
+  const feed = await prisma.post.findMany({
+    where: { published: true },
+  });
+  return {
+    props: { feed },
+    revalidate: 10,
+  };
+}
+```
+### Delete
+```javascript
+// delete data
+
+import prisma from '../../../lib/prisma'
+
+export default async function handle(req, res) {
+    const result = await prisma.post.delete({
+        where: {
+            id: req.query.id,
+        }
+    });
+    res.json(result);
+}
+```
+
+
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
