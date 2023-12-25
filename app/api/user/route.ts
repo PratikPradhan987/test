@@ -47,5 +47,5 @@ export async function DELETE(req: NextRequest) {
     },
   });
   return NextResponse.json(result);
-  console.log("oka", req.url);
+  // console.log("oka", req.url);
 }
