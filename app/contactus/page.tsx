@@ -1,9 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Contact() {
+  const router = useRouter();
+
   const URL = "http://localhost:3000/api/user";
   const [feed, setFeed] = useState([]);
   useEffect(() => {
@@ -15,7 +18,7 @@ export default function Contact() {
       });
     };
     fetchData();
-  }, []);
+  }, [feed]);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,7 +29,9 @@ export default function Contact() {
       setLoading(true);
       // alert(postId);
       // console.log("asdasdasddd", postId);
-
+      // alert();
+      // redirect("/");
+      // router.refresh();
       await fetch("/api/user?id=" + postId, {
         // await fetch("/api/user/" + postId, {
         method: "DELETE",
@@ -53,6 +58,9 @@ export default function Contact() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         });
+        // }).then(router.refresh);
+        // redirect("http://localhost:3000/");1
+        // router.forward("http://localhost:3000/");
         // await Router.push("/drafts");
       } catch (error) {
         console.error(error);
@@ -134,7 +142,9 @@ export default function Contact() {
                         </p>
                         <div className="flex md:mt-4 mt-6">
                           <button
-                            onClick={() => deletePost(item.id)}
+                            onClick={() =>
+                              deletePost(item.id).then(redirect("/"))
+                            }
                             className="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded"
                           >
                             {loading ? "Loading" : "Delete"}
